@@ -9,6 +9,11 @@ def register_user():
 
     User.insert(name, curp, account, password)
 
+def view_users():
+    users = User.get_users()
+    for user in users:
+        print(f"ID: {user.id}, Nombre: {user.name}, CURP: {user.curp}, Cuenta: {user.account}")
+
 if __name__ == "__main__":
     print("Seleccione una opciond de menu")
     print("1.- Registrar usuario")
@@ -16,3 +21,5 @@ if __name__ == "__main__":
     option = int(input())
     if option == 1:
         register_user()
+    elif option == 2:
+        view_users()

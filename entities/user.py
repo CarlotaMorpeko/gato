@@ -25,4 +25,21 @@ class User:
         cursor.close()
         connection.close()
     
+    def get_users():
+        connection = get_connection()
+        cursor = connection.cursor(dictionary=True)
+        sql = "SELECT id, name, curp, account, password FROM user"
         
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+
+        return [
+            
+            User(id = row["id"],
+                 name = row["name"],
+                 account = row["account"],
+                 curp = decrypt(row["curp"]),
+                 password = row["password"]
+                 )
+            for row in rows
+        ]
