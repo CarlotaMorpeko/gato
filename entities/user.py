@@ -16,10 +16,11 @@ class User:
         cursor = connection.cursor()
 
         curp_encrypt = encrypt(curp)
+        password_encrypt = encrypt(password)
 
 
         sql = "INSERT INTO user(name, curp, account, password) VALUES (%s, %s, %s, %s)"
-        cursor.execute(sql, (name, curp_encrypt, account, password))
+        cursor.execute(sql, (name, curp_encrypt, account, password_encrypt))
         connection.commit()
 
         cursor.close()
@@ -43,3 +44,22 @@ class User:
                  )
             for row in rows
         ]
+    
+    def get_user_by_account(account):
+
+        connection = get_connection()
+        cursor = connection.cursor(dictionary=True)
+        sql = "SELECT id, name, curp, account, password FROM user WHERE account = %s"
+        
+        cursor.execute(sql, (account,))
+        row = cursor.fetchone()
+
+        if row is None:
+            return None
+        else:
+            return User(id = row["id"],
+                        name = row["name"],
+                        account = row["account"],
+                        curp = decrypt(row["curp"]),
+                        password = decrypt(row["password"])
+                        )
