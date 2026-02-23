@@ -45,6 +45,19 @@ class User:
             for row in rows
         ]
     
+    def check_account_exists(account):
+        connection = get_connection()
+        cursor = connection.cursor(dictionary=True)
+        sql = "SELECT account FROM user WHERE account = %s"
+        
+        cursor.execute(sql, (account,))
+        row = cursor.fetchone()
+        
+        if row is None:
+            return False
+        else:
+            return True  
+          
     def get_user_by_account(account):
 
         connection = get_connection()
@@ -63,3 +76,5 @@ class User:
                         curp = decrypt(row["curp"]),
                         password = decrypt(row["password"])
                         )
+        
+

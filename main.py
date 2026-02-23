@@ -22,9 +22,7 @@ def login():
         return True
     else:
         return False
-    
     #return user and user.password == password
-
 
 if __name__ == "__main__":
     print("Inicio de sesion")
