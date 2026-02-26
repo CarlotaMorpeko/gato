@@ -51,12 +51,12 @@ class User:
         sql = "SELECT account FROM user WHERE account = %s"
         
         cursor.execute(sql, (account,))
-        row = cursor.fetchone()
+        row = cursor.fetchall()
         
         if row is None:
             return False
         else:
-            return True  
+            return True 
           
     def get_user_by_account(account):
 
