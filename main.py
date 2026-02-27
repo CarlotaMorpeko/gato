@@ -6,7 +6,7 @@ def register_user():
     curp = input("CURP: ")
     account = input("Cuenta: ")
     if User.check_account_exists(account):
-        print("Usuario ya existe")
+        print("Usuario ya existente")
     else:
         password = getpass("Contraseña: ")
         User.insert(name, curp, account, password)
@@ -16,6 +16,18 @@ def view_users():
     users = User.get_users()
     for user in users:
         print(f"ID: {user.id}, Nombre: {user.name}, CURP: {user.curp}, Cuenta: {user.account}")
+
+def save_card():
+    card_num = input("Número de tarjeta: ")
+    bank = input("Banco: ")
+    card_type = input("Tipo de tarjeta: ")
+    User.card_insert(card_num, bank, card_type)
+    print("Tarjeta guardada exitosamente")
+
+def view_cards():
+    cards = User.get_cards()
+    for card in cards:
+        print(f"Número de tarjeta: {card.card_num}, Banco: {card.bank}, Tipo de tarjeta: {card.card_type}")
 
 def login():
         try:
@@ -28,6 +40,7 @@ def login():
                 return False
         except KeyboardInterrupt as e:
             print("\nOperación cancelada por el usuario.")
+            return False
 
 if __name__ == "__main__":
     print("Inicio de sesion")
@@ -36,13 +49,19 @@ if __name__ == "__main__":
                 print("Seleccione una opcion de menu")
                 print("1.- Registrar usuario")
                 print("2.- Consultar usuario")
-                print("3.- Salir")
+                print("3.- Guardar tarjeta")
+                print("4.- Consultar tarjeta")
+                print("5.- Salir")
                 option = int(input())
                 if option == 1:
                     register_user()
                 elif option == 2:
                     view_users()
                 elif option == 3:
+                    save_card()
+                elif option == 4:
+                    view_cards()
+                elif option == 5:
                     print("Saliendo...")
                     break
                 else:
